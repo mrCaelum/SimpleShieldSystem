@@ -1,12 +1,21 @@
 package com.mrcaelum.basicshieldsystem;
 
+import com.buuz135.mhud.MultipleHUD;
+import com.hypixel.hytale.common.plugin.PluginIdentifier;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.event.EventRegistry;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
+import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.plugin.PluginBase;
+import com.hypixel.hytale.server.core.plugin.PluginManager;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.mrcaelum.basicshieldsystem.listeners.PlayerListener;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.mrcaelum.basicshieldsystem.systems.FlatShieldDamageSystem;
 import com.mrcaelum.basicshieldsystem.systems.ShieldHudUpdateSystem;
 import com.mrcaelum.basicshieldsystem.ui.ShieldHud;
@@ -23,11 +32,14 @@ import java.util.logging.Level;
  * @version 0.0.1
  */
 public class BasicShieldSystemPlugin extends JavaPlugin {
+    private static final int HEALTH_STAT_INDEX =
+            EntityStatType.getAssetMap().getIndex("Health");
     private static final int SHIELD_STAT_INDEX =
             EntityStatType.getAssetMap().getIndex("Shield");
-    Map<PlayerRef, ShieldHud> playerRefShieldHudMap = new HashMap<>();
+    private static final Map<PlayerRef, ShieldHud> playerRefShieldHudMap = new HashMap<>();
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private static BasicShieldSystemPlugin instance;
+    private static ShieldHudUpdateSystem shieldHudUpdateSystem = null;
 
     public BasicShieldSystemPlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -41,22 +53,28 @@ public class BasicShieldSystemPlugin extends JavaPlugin {
     @Override
     protected void setup() {
         LOGGER.at(Level.INFO).log("Setting up...");
+
+        EventRegistry eventBus = getEventRegistry();
         try {
-            new PlayerListener().register(getEventRegistry());
+            eventBus.registerGlobal(PlayerReadyEvent.class, this::onPlayerReady);
+            eventBus.registerGlobal(PlayerDisconnectEvent.class, this::onPlayerDisconnect);
             LOGGER.at(Level.INFO).log("Registered player event listeners");
         } catch (Exception e) {
-            LOGGER.at(Level.WARNING).withCause(e).log("Failed to register listeners");
+            LOGGER.at(Level.WARNING).withCause(e).log("Failed to register player event listeners");
         }
 
         getEntityStoreRegistry().registerSystem(new FlatShieldDamageSystem(
                 SHIELD_STAT_INDEX
         ));
-        this.getEntityStoreRegistry().registerSystem(
-                new ShieldHudUpdateSystem(
-                        SHIELD_STAT_INDEX,
-                        playerRefShieldHudMap
-                )
-        );
+
+        if (shieldHudUpdateSystem == null) {
+            shieldHudUpdateSystem = new ShieldHudUpdateSystem(
+                    SHIELD_STAT_INDEX,
+                    HEALTH_STAT_INDEX,
+                    playerRefShieldHudMap
+            );
+            getEntityStoreRegistry().registerSystem(shieldHudUpdateSystem);
+        }
         LOGGER.at(Level.INFO).log("Setup complete!");
     }
 
@@ -69,5 +87,55 @@ public class BasicShieldSystemPlugin extends JavaPlugin {
     protected void shutdown() {
         LOGGER.at(Level.INFO).log("Shutting down...");
         instance = null;
+    }
+
+    /**
+     * Handle player ready event.
+     * @param event The player ready event
+     */
+    private void onPlayerReady(PlayerReadyEvent event) {
+        Ref<EntityStore> playerRefStore = event.getPlayerRef();
+        Store<EntityStore> store = playerRefStore.getStore();
+        PlayerRef playerRef = store.getComponent(playerRefStore, PlayerRef.getComponentType());
+
+        if (playerRef == null) {
+            return;
+        }
+
+        Ref<EntityStore> ref = playerRef.getReference();
+
+        if (ref == null || !ref.isValid()) {
+            return;
+        }
+
+        Player player = store.getComponent(ref, Player.getComponentType());
+
+        if (player == null) {
+            return;
+        }
+
+        ShieldHud shieldHud = new ShieldHud(playerRef);
+        PluginBase plugin = PluginManager.get().getPlugin(PluginIdentifier.fromString("Buuz135:MultipleHUD"));
+        if (plugin != null) {
+            LOGGER.at(Level.INFO).log("MultipleHUD plugin found.");
+            MultipleHUD.getInstance().setCustomHud(player, playerRef, "ShieldHUD", shieldHud);
+        }
+        else {
+            LOGGER.at(Level.INFO).log("MultipleHUD plugin not found. Create base custom hud.");
+            player.getHudManager().setCustomHud(playerRef, shieldHud);
+        }
+        shieldHud.show();
+        playerRefShieldHudMap.put(playerRef, shieldHud);
+    }
+
+    /**
+     * Handle player disconnect event.
+     * @param event The player disconnect event
+     */
+    private void onPlayerDisconnect(PlayerDisconnectEvent event) {
+        PlayerRef playerRef = event.getPlayerRef();
+
+        shieldHudUpdateSystem.removePlayerData(playerRef);
+        playerRefShieldHudMap.remove(playerRef);
     }
 }

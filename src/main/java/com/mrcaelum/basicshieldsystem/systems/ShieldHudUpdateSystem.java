@@ -25,17 +25,20 @@ public final class ShieldHudUpdateSystem extends EntityTickingSystem<EntityStore
     private final ComponentType<EntityStore, PlayerRef> PLAYER_REF;
 
     private final int shieldStatIndex;
+    private final int healthStatIndex;
     private final Map<PlayerRef, ShieldHud> hudMap;
     private final Map<PlayerRef, Float> lastShieldValues = new HashMap<>();
 
     public ShieldHudUpdateSystem(
             int shieldStatIndex,
+            int healthStatIndex,
             Map<PlayerRef, ShieldHud> hudMap
     ) {
         this.STAT_MAP = EntityStatMap.getComponentType();
         this.PLAYER = Player.getComponentType();
         this.PLAYER_REF = PlayerRef.getComponentType();
         this.shieldStatIndex = shieldStatIndex;
+        this.healthStatIndex = healthStatIndex;
         this.hudMap = hudMap;
     }
 
@@ -65,10 +68,11 @@ public final class ShieldHudUpdateSystem extends EntityTickingSystem<EntityStore
         if (hud == null) return;
 
         EntityStatValue shield = statMap.get(shieldStatIndex);
-        if (shield == null) return;
+        EntityStatValue health = statMap.get(healthStatIndex);
+        if (shield == null || health == null) return;
 
         float current = shield.get();
-        float max = shield.getMax();
+        float max = health.getMax();
         float normalized = max <= 0 ? 0f : current / max;
 
         Float last = lastShieldValues.get(playerRef);
@@ -81,6 +85,10 @@ public final class ShieldHudUpdateSystem extends EntityTickingSystem<EntityStore
         UICommandBuilder builder = new UICommandBuilder();
         hud.setShieldValue(normalized, builder);
         hud.update(false, builder);
+    }
+
+    public void removePlayerData(PlayerRef playerRef) {
+        lastShieldValues.remove(playerRef);
     }
 }
 
