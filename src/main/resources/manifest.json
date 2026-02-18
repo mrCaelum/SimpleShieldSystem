@@ -14,7 +14,7 @@
   "LoadOrder": "POSTWORLD",
   "ServerVersion": "2026.02.18-f3b8fff95",
   "OptionalDependencies": {
-    "com.buuz135:MultipleHUD": ">=1.0.5"
+    "com.buuz135:MultipleHUD": ">=1.0.6"
   },
   "DisabledByDefault": false,
   "IncludesAssetPack": true
