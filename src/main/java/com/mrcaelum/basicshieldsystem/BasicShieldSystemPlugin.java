@@ -99,7 +99,6 @@ public class BasicShieldSystemPlugin extends JavaPlugin {
         if (shieldHudUpdateSystem == null) {
             shieldHudUpdateSystem = new ShieldHudUpdateSystem(
                     shieldStatIndex,
-                    EntityStatType.getAssetMap().getIndex("Health"),
                     playerRefShieldHudMap
             );
             getEntityStoreRegistry().registerSystem(shieldHudUpdateSystem);

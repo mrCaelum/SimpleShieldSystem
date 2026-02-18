@@ -1,31 +1,34 @@
 package com.mrcaelum.basicshieldsystem.systems;
 
-import com.hypixel.hytale.component.ArchetypeChunk;
-import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.component.ComponentType;
-import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
+import com.hypixel.hytale.server.core.modules.entity.damage.DamageModule;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class FlatShieldDamageSystem extends DamageEventSystem {
 
     private final int shieldStatIndex;
-    private final ComponentType<EntityStore, EntityStatMap> STAT_MAP;
 
     public FlatShieldDamageSystem(int shieldStatIndex) {
         this.shieldStatIndex = shieldStatIndex;
-        this.STAT_MAP = EntityStatMap.getComponentType();
+    }
+
+    @Override
+    @Nullable
+    public SystemGroup<EntityStore> getGroup() {
+        return DamageModule.get().getFilterDamageGroup();
     }
 
     @Override
     public Query<EntityStore> getQuery() {
-        return Query.and(STAT_MAP);
+        return Query.and(EntityStatMap.getComponentType());
     }
 
     @Override
@@ -41,7 +44,7 @@ public final class FlatShieldDamageSystem extends DamageEventSystem {
             return;
         }
 
-        EntityStatMap stats = chunk.getComponent(index, STAT_MAP);
+        EntityStatMap stats = chunk.getComponent(index, EntityStatMap.getComponentType());
         if (stats == null) {
             return;
         }
