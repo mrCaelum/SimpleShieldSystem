@@ -2,9 +2,9 @@
   "groupId": "com.mrcaelum",
   "artifactId": "simpleshieldsystem",
   "modName": "SimpleShieldSystem",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "buildSystem": "Gradle",
   "language": "Java",
-  "jarPath": "build/libs/simpleshieldsystem-0.0.3.jar",
+  "jarPath": "build/libs/simpleshieldsystem-0.1.0.jar",
   "buildTask": "shadowJar"
 }

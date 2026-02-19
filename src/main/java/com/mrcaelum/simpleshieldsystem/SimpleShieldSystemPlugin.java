@@ -1,6 +1,5 @@
 package com.mrcaelum.simpleshieldsystem;
 
-import com.buuz135.mhud.MultipleHUD;
 import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
 import com.hypixel.hytale.common.plugin.PluginIdentifier;
 import com.hypixel.hytale.component.Ref;
@@ -30,7 +29,7 @@ import java.util.logging.Level;
  * SimpleShieldSystem - Simple Shield System for Hytale
  *
  * @author mrCaelum
- * @version 0.0.3
+ * @version 0.1.0
  */
 public class SimpleShieldSystemPlugin extends JavaPlugin {
     private static final Map<PlayerRef, ShieldHud> playerRefShieldHudMap = new HashMap<>();
@@ -131,15 +130,7 @@ public class SimpleShieldSystemPlugin extends JavaPlugin {
         }
 
         ShieldHud shieldHud = new ShieldHud(playerRef);
-        PluginBase plugin = PluginManager.get().getPlugin(PluginIdentifier.fromString("Buuz135:MultipleHUD"));
-        if (plugin != null) {
-            LOGGER.at(Level.INFO).log("MultipleHUD plugin found.");
-            MultipleHUD.getInstance().setCustomHud(player, playerRef, "ShieldHUD", shieldHud);
-        }
-        else {
-            LOGGER.at(Level.INFO).log("MultipleHUD plugin not found. Create base custom hud.");
-            player.getHudManager().setCustomHud(playerRef, shieldHud);
-        }
+        player.getHudManager().setCustomHud(playerRef, shieldHud);
         shieldHud.show();
         playerRefShieldHudMap.put(playerRef, shieldHud);
     }

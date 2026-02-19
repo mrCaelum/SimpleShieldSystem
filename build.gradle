@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.mrcaelum.simpleshieldsystem'
-version = '0.0.3'
+version = '0.1.0'
 
 repositories {
     mavenCentral()
@@ -26,8 +26,6 @@ repositories {
 dependencies {
     // Hytale Server API from official Maven repository
     compileOnly 'com.hypixel.hytale:Server:2026.02.19-1a311a592'
-    // MultipleHUD
-    implementation 'com.buuz135:MultipleHUD:1.0.6'
     // JSR305 annotations (@Nonnull, @Nullable)
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'com.google.code.gson:gson:2.10.1'

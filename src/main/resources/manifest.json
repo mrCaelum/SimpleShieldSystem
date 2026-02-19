@@ -1,7 +1,7 @@
 {
   "Group": "com.mrcaelum",
   "Name": "SimpleShieldSystem",
-  "Version": "0.0.3",
+  "Version": "0.1.0",
   "Description": "Simple Shield System for Hytale",
   "Authors": [
     {
@@ -12,9 +12,6 @@
   "Website": "https://www.curseforge.com/hytale/mods/simpleshieldsystem",
   "Main": "com.mrcaelum.simpleshieldsystem.SimpleShieldSystemPlugin",
   "ServerVersion": "2026.02.19-1a311a592",
-  "OptionalDependencies": {
-    "com.buuz135:MultipleHUD": ">=1.0.6"
-  },
   "DisabledByDefault": false,
   "IncludesAssetPack": true
 }
