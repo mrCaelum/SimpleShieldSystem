@@ -1,4 +1,4 @@
-package com.mrcaelum.basicshieldsystem.systems;
+package com.mrcaelum.simpleshieldsystem.systems;
 
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;

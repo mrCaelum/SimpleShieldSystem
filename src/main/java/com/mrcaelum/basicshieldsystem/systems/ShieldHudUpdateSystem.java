@@ -1,4 +1,4 @@
-package com.mrcaelum.basicshieldsystem.systems;
+package com.mrcaelum.simpleshieldsystem.systems;
 
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -12,7 +12,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.mrcaelum.basicshieldsystem.ui.ShieldHud;
+import com.mrcaelum.simpleshieldsystem.ui.ShieldHud;
 
 import javax.annotation.Nonnull;
 import java.util.Map;

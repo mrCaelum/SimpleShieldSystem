@@ -1,4 +1,4 @@
-package com.mrcaelum.basicshieldsystem;
+package com.mrcaelum.simpleshieldsystem;
 
 import com.buuz135.mhud.MultipleHUD;
 import com.hypixel.hytale.assetstore.AssetMap;
@@ -18,9 +18,9 @@ import com.hypixel.hytale.server.core.plugin.PluginBase;
 import com.hypixel.hytale.server.core.plugin.PluginManager;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.mrcaelum.basicshieldsystem.systems.FlatShieldDamageSystem;
-import com.mrcaelum.basicshieldsystem.systems.ShieldHudUpdateSystem;
-import com.mrcaelum.basicshieldsystem.ui.ShieldHud;
+import com.mrcaelum.simpleshieldsystem.systems.FlatShieldDamageSystem;
+import com.mrcaelum.simpleshieldsystem.systems.ShieldHudUpdateSystem;
+import com.mrcaelum.simpleshieldsystem.ui.ShieldHud;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -28,23 +28,23 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
- * BasicShieldSystem - Basic Shield System for Hytale
+ * SimpleShieldSystem - Simple Shield System for Hytale
  *
  * @author mrCaelum
- * @version 0.0.2
+ * @version 0.0.3
  */
-public class BasicShieldSystemPlugin extends JavaPlugin {
+public class SimpleShieldSystemPlugin extends JavaPlugin {
     private static final Map<PlayerRef, ShieldHud> playerRefShieldHudMap = new HashMap<>();
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private static BasicShieldSystemPlugin instance;
+    private static SimpleShieldSystemPlugin instance;
     private static ShieldHudUpdateSystem shieldHudUpdateSystem = null;
 
-    public BasicShieldSystemPlugin(@Nonnull JavaPluginInit init) {
+    public SimpleShieldSystemPlugin(@Nonnull JavaPluginInit init) {
         super(init);
         instance = this;
     }
 
-    public static BasicShieldSystemPlugin getInstance() {
+    public static SimpleShieldSystemPlugin getInstance() {
         return instance;
     }
 

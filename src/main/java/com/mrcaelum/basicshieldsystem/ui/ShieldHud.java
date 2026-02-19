@@ -1,4 +1,4 @@
-package com.mrcaelum.basicshieldsystem.ui;
+package com.mrcaelum.simpleshieldsystem.ui;
 
 import com.hypixel.hytale.server.core.entity.entities.player.hud.CustomUIHud;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
