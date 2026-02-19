@@ -1,7 +1,6 @@
 package com.mrcaelum.simpleshieldsystem;
 
 import com.buuz135.mhud.MultipleHUD;
-import com.hypixel.hytale.assetstore.AssetMap;
 import com.hypixel.hytale.assetstore.event.LoadedAssetsEvent;
 import com.hypixel.hytale.common.plugin.PluginIdentifier;
 import com.hypixel.hytale.component.Ref;
