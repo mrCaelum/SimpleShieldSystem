@@ -1,0 +1,4 @@
+items.Potion_Shield_Lesser.name = Poção de Proteção Menor
+items.Potion_Shield_Lesser.description = Concede 20 pontos de escudo por 30 segundos.
+items.Potion_Shield_Greater.name = Poção de Escudo Maior
+items.Potion_Shield_Greater.description = Concede 40 pontos de escudo por 45 segundos.

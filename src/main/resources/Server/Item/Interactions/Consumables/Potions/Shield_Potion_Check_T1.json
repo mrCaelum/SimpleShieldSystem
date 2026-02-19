@@ -1,0 +1,16 @@
+{
+  "Type": "EffectCondition",
+  "EntityEffectIds": [
+    "Shield_Potion_Buff_T1",
+    "Shield_Potion_Buff_T2"
+  ],
+  "Match": "None",
+  "Next": {
+    "Type": "ApplyEffect",
+    "EffectId": "Shield_Potion_Buff_T1"
+  },
+  "Failed": {
+    "Type": "Simple",
+    "Runtime": 0
+  }
+}

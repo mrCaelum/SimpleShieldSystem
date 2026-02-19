@@ -1,0 +1,8 @@
+{
+  "StatModifiers": {
+    "Shield": 20,
+    "ShieldDecayDelay": -30
+  },
+  "Duration": 30,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Potion_Shield_Small.png"
+}

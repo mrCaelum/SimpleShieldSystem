@@ -1,0 +1,4 @@
+items.Potion_Shield_Lesser.name = Lesser Shield Potion
+items.Potion_Shield_Lesser.description = Grants 20 shield points for 30 seconds.
+items.Potion_Shield_Greater.name = Greater Shield Potion
+items.Potion_Shield_Greater.description = Grants 40 shield points for 45 seconds.

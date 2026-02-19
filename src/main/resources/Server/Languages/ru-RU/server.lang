@@ -1,0 +1,4 @@
+items.Potion_Shield_Lesser.name = Зелье меньшего щита
+items.Potion_Shield_Lesser.description = Предоставляет 20 очков щита на 30 секунд.
+items.Potion_Shield_Greater.name = Зелье усиления щита
+items.Potion_Shield_Greater.description = Предоставляет 40 очков защиты на 45 секунд.
